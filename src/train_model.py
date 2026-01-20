@@ -13,14 +13,20 @@ from sklearn.metrics import accuracy_score, classification_report
 import pickle
 import os
 
-def train_model(data_path='../archive/IMDB Dataset.csv'):
+def train_model(data_path=None):
     """
     Train the sentiment analysis model
     
     Args:
-        data_path: Path to the IMDB dataset CSV file
+        data_path: Path to the IMDB dataset CSV file (default: auto-detect from script location)
     """
     print("Loading dataset...")
+    
+    # Auto-detect path if not provided
+    if data_path is None:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(script_dir)
+        data_path = os.path.join(project_root, 'archive', 'IMDB Dataset.csv')
     
     # Check if dataset exists
     if not os.path.exists(data_path):
@@ -63,18 +69,26 @@ def train_model(data_path='../archive/IMDB Dataset.csv'):
     
     # Save model and vectorizer
     print("\nSaving model and vectorizer...")
-    os.makedirs('../app', exist_ok=True)
     
-    with open('../app/model.pkl', 'wb') as f:
+    # Use absolute path to save models
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
+    app_dir = os.path.join(project_root, 'app')
+    os.makedirs(app_dir, exist_ok=True)
+    
+    model_path = os.path.join(app_dir, 'model.pkl')
+    vectorizer_path = os.path.join(app_dir, 'vectorizer.pkl')
+    
+    with open(model_path, 'wb') as f:
         pickle.dump(model, f)
     
-    with open('../app/vectorizer.pkl', 'wb') as f:
+    with open(vectorizer_path, 'wb') as f:
         pickle.dump(vectorizer, f)
     
     print("Model and vectorizer saved successfully!")
-    print("Files saved:")
-    print("  - ../app/model.pkl")
-    print("  - ../app/vectorizer.pkl")
+    print(f"Files saved:")
+    print(f"  - {model_path}")
+    print(f"  - {vectorizer_path}")
 
 if __name__ == "__main__":
     train_model()

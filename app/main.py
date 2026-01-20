@@ -18,9 +18,11 @@ app = FastAPI(
 )
 
 # Configure CORS
+# WARNING: In production, replace "*" with specific allowed origins
+# For development only - allows all origins for testing
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify exact origins
+    allow_origins=["*"],  # TODO: In production, specify exact origins: ["https://yourdomain.com"]
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -62,15 +64,25 @@ async def predict_sentiment(review: Review):
         
     Returns:
         PredictionResponse with sentiment and confidence score
+        
+    Note:
+        This is currently a PLACEHOLDER implementation.
+        The actual model needs to be trained first using src/train_model.py
     """
     # TODO: Load and use the trained model
-    # This is a placeholder implementation
-    # When you add the actual model, load it here:
-    # model = pickle.load(open('model.pkl', 'rb'))
-    # vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
+    # Uncomment the following when model files are available:
+    # try:
+    #     model = pickle.load(open('app/model.pkl', 'rb'))
+    #     vectorizer = pickle.load(open('app/vectorizer.pkl', 'rb'))
+    #     text_vectorized = vectorizer.transform([review.text])
+    #     prediction = model.predict(text_vectorized)[0]
+    #     confidence = model.predict_proba(text_vectorized).max()
+    #     sentiment = "Positive" if prediction == 1 else "Negative"
+    #     return PredictionResponse(sentiment=sentiment, confidence=float(confidence))
+    # except FileNotFoundError:
+    #     raise HTTPException(status_code=503, detail="Model not trained yet. Run src/train_model.py first.")
     
-    # Placeholder response
-    # Replace this with actual model prediction
+    # PLACEHOLDER response for testing without trained model
     return PredictionResponse(
         sentiment="Positive",
         confidence=0.85
