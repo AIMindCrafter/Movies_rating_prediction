@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Rating Prediction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Movie Rating Prediction</h1>
+            <p>Analyze movie reviews with AI-powered sentiment analysis</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <textarea 
+                    id="reviewText" 
+                    placeholder="Enter your movie review here..."
+                    rows="6"
+                ></textarea>
+                <button id="analyzeBtn" onclick="analyzeSentiment()">
+                    Analyze Sentiment
+                </button>
+            </div>
+
+            <div id="result" class="result hidden">
+                <h2>Analysis Result</h2>
+                <div class="sentiment-display">
+                    <span id="sentimentLabel" class="sentiment-label"></span>
+                    <span id="confidenceScore" class="confidence-score"></span>
+                </div>
+            </div>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Analyzing...</p>
+            </div>
+
+            <div id="error" class="error hidden"></div>
+        </main>
+
+        <footer>
+            <p>Powered by FastAPI and Logistic Regression</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
